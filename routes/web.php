@@ -5,6 +5,8 @@ use App\Http\Controllers\UndanganController;
 use App\Http\Controllers\RsvpController;
 use App\Http\Controllers\UcapanController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LinkTamuController;
+use App\Http\Middleware\AdminBasicAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +32,15 @@ Route::post('/ucapan', [UcapanController::class, 'store'])
 
 /*
 |--------------------------------------------------------------------------
-| Route Admin Dashboard
+| Route Admin (Dilindungi Basic Auth)
 |--------------------------------------------------------------------------
-| Sementara gunakan string 'admin.auth' dulu, middleware-nya akan kita buat setelah ini.
 */
-Route::get('/admin', [AdminController::class, 'index'])
-    ->middleware('admin.auth') // String biasa, bukan Closure
-    ->name('admin.index');
+Route::middleware(AdminBasicAuth::class)->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/link', [LinkTamuController::class, 'form'])->name('admin.link');
+    Route::post('/admin/link', [LinkTamuController::class, 'generate'])->name('admin.link.generate');
+});
+
+// Paling bawah: nama tamu di akhir link.
+Route::get('/{slug}', [UndanganController::class, 'index'])
+    ->where('slug', '(?!.*\.(ico|txt|xml|png|jpe?g|webp|svg|gif|css|js|map|json|mp3)$)[^/]+');

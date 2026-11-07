@@ -9,16 +9,26 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminBasicAuth
 {
     /**
-     * Handle an incoming request untuk melindungi halaman admin.
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $username = env('ADMIN_USER', 'admin');
-        $password = env('ADMIN_PASS', 'secret');
+        $configUser = config('admin.username');
+        $configPass = config('admin.password');
 
-        // Cek kredensial Basic Auth dari header request
-        if ($request->getUser() !== $username || $request->getPassword() !== $password) {
-            return response('Unauthorized.', 401)->header('WWW-Authenticate', 'Basic realm="Admin Area"');
+        if (empty($configUser) || empty($configPass)) {
+            abort(503, 'Kredensial admin belum dikonfigurasi di file .env.');
+        }
+
+        $inputUser = (string) ($request->getUser() ?? '');
+        $inputPass = (string) ($request->getPassword() ?? '');
+
+        if (!hash_equals((string) $configUser, $inputUser) || !hash_equals((string) $configPass, $inputPass)) {
+            return response('Unauthorized.', 401, [
+                'WWW-Authenticate' => 'Basic realm="Admin Undangan"',
+            ]);
         }
 
         return $next($request);

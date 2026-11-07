@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 24" fill="none">
+    <!-- Center Diamond Cluster -->
+    <path d="M100 2 L106 12 L100 22 L94 12 Z" fill="#C5A059" />
+    <path d="M88 7 L93 12 L88 17 L83 12 Z" fill="#C5A059" opacity="0.8" />
+    <path d="M112 7 L117 12 L112 17 L107 12 Z" fill="#C5A059" opacity="0.8" />
+    <circle cx="78" cy="12" r="1.5" fill="#C5A059" />
+    <circle cx="122" cy="12" r="1.5" fill="#C5A059" />
+    
+    <!-- Flanking Lines -->
+    <line x1="20" y1="12" x2="72" y2="12" stroke="#C5A059" stroke-width="1" stroke-linecap="round" opacity="0.6" />
+    <line x1="128" y1="12" x2="180" y2="12" stroke="#C5A059" stroke-width="1" stroke-linecap="round" opacity="0.6" />
+</svg>

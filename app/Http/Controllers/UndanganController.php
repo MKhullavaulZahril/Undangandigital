@@ -10,13 +10,26 @@ class UndanganController extends Controller
 {
     /**
      * Tampilkan halaman undangan utama.
+     * Nama tamu bisa dari akhir link (/Mbak-Dinda) atau dari ?to=Mbak%20Dinda
      */
-    public function index(Request $request)
+    public function index(Request $request, ?string $slug = null)
     {
-        // Ambil parameter 'to' dari URL, bersihkan dari tag HTML, dan batasi panjangnya
-        $tamu = $request->query('to', 'Bapak/Ibu/Saudara/i');
+        if ($slug !== null) {
+            // Dari akhir link: tanda hubung dibaca sebagai spasi
+            $tamu = str_replace('-', ' ', $slug);
+        } else {
+            // Link lama ?to=... tetap berfungsi
+            $tamu = (string) $request->query('to', '');
+        }
+
+        // Bersihkan dari tag HTML, rapikan spasi, dan batasi panjangnya
         $tamu = strip_tags($tamu);
+        $tamu = Str::of($tamu)->squish()->toString();
         $tamu = Str::limit($tamu, 60, '');
+
+        if ($tamu === '') {
+            $tamu = 'Bapak/Ibu/Saudara/i';
+        }
 
         // Generate URL Google Calendar untuk tombol "Save the Date"
         $akadStart = Carbon::parse(config('wedding.akad.target_iso'));

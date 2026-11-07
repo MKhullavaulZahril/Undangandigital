@@ -1,18 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
 @import 'tailwindcss';
 
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
 @theme {
-    --color-krem: #F7F1E8;
+    --color-krem: #F9F6EE;
     --color-sage: #8A9A7B;
-    --color-emas: #B8975A;
+    --color-emas: #C5A059;
     --color-cokelat: #3B2F2A;
+    --color-gelap: #1A1A1A;
+    --color-abu: #4A4A4A;
 
     --font-judul: 'Cormorant Garamond', serif;
     --font-isi: 'Poppins', sans-serif;
     --font-script: 'Great Vibes', cursive;
+    --font-arab: 'Amiri', serif;
 }
 
 /* Custom scrollbar */
@@ -20,10 +23,10 @@
     width: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: #F7F1E8;
+    background: #F9F6EE;
 }
 ::-webkit-scrollbar-thumb {
-    background: #8A9A7B;
+    background: #C5A059;
     border-radius: 3px;
 }
 
@@ -31,12 +34,27 @@
 .reveal {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
 }
 
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Animasi lembut untuk gambar (subtle floating, tidak alay) */
+@keyframes subtleFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+.animate-subtle-float {
+    animation: subtleFloat 6s ease-in-out infinite;
 }
 
 /* Utility untuk menyembunyikan elemen Alpine sebelum di-hydrate */

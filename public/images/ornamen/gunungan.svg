@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" fill="none" stroke="#C5A059" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Traditional Javanese Gunungan (Kayon) Silhouette -->
+    <!-- Pointed Finial / Pucuk -->
+    <path d="M50 4 L50 18" stroke-width="2" />
+    <circle cx="50" cy="5" r="2" fill="#C5A059" stroke="none" />
+    
+    <!-- Outer Arch & Crest -->
+    <path d="M50 18 C38 32, 20 48, 20 72 C20 90, 32 102, 45 106 L45 124 L55 124 L55 106 C68 102, 80 90, 80 72 C80 48, 62 32, 50 18 Z" />
+    
+    <!-- Inner Motif / Sacred Tree of Life (Pohon Hayat) -->
+    <path d="M50 40 L50 96" stroke-width="2" />
+    <path d="M50 56 Q36 64 32 78" stroke-width="1.8" />
+    <path d="M50 56 Q64 64 68 78" stroke-width="1.8" />
+    <path d="M50 72 Q38 78 36 90" stroke-width="1.8" />
+    <path d="M50 72 Q62 78 64 90" stroke-width="1.8" />
+    
+    <!-- Base Platform -->
+    <path d="M38 124 L62 124" stroke-width="2.5" />
+</svg>

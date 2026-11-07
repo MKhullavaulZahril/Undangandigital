@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'The Wedding of [Nama Pria] & [Nama Wanita]')</title>
+    <title>@yield('title', 'The Wedding of ' . config('wedding.mempelai_pria.panggilan', 'Ainun') . ' & ' . config('wedding.mempelai_wanita.panggilan', 'Dinda'))</title>
 
     {{-- Jangan diindeks Google --}}
     <meta name="robots" content="noindex, nofollow">
 
     {{-- Preview link WhatsApp / sosial media --}}
     <meta property="og:type" content="website">
-    <meta property="og:title" content="The Wedding of [Nama Pria] & [Nama Wanita]">
-    <meta property="og:description" content="[Hari, tanggal bulan tahun]">
+    <meta property="og:title" content="The Wedding of {{ config('wedding.mempelai_pria.panggilan', 'Ainun') }} & {{ config('wedding.mempelai_wanita.panggilan', 'Dinda') }}">
+    <meta property="og:description" content="{{ \Carbon\Carbon::parse(config('wedding.akad.target_iso'))->translatedFormat('l, d F Y') }}">
     <meta property="og:image" content="{{ asset('images/cover.jpg') }}">
     <meta property="og:url" content="{{ url('/') }}">
     <meta property="og:locale" content="id_ID">
