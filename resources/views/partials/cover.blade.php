@@ -1,10 +1,10 @@
 <section 
     id="cover"
     x-show="!isOpen"
-    x-transition:leave="transition-all ease-in-out duration-500 transform"
+    x-transition:leave="transition-all ease-in-out duration-700 transform"
     x-transition:leave-start="translate-y-0 opacity-100"
     x-transition:leave-end="-translate-y-full opacity-0"
-    class="relative min-h-screen w-full flex flex-col justify-between text-white overflow-hidden select-none"
+    class="fixed inset-0 z-50 max-w-[480px] mx-auto min-h-screen w-full flex flex-col justify-between text-white overflow-hidden select-none shadow-2xl"
     style="background-color: #1A1A1A;"
 >
     <!-- Background Image dengan Vignette Halus -->

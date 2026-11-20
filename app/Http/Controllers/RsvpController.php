@@ -62,12 +62,12 @@ class RsvpController extends Controller
         $statusText = $status === 'hadir' ? 'Insya Allah Hadir' : 'Mohon Maaf Belum Bisa Hadir';
 
         if ($status === 'hadir') {
-            $pesan = "Halo {$pria} & {$wanita},\n\nSaya ingin mengonfirmasi kehadiran di acara pernikahan:\n- Nama: {$namaTamu}\n- Konfirmasi: {$statusText}\n- Jumlah Tamu: {$jumlah} Orang\n\nTerima kasih atas undangannya.";
+            $pesan = "Halo {$pria} dan {$wanita},\n\nSaya ingin mengonfirmasi kehadiran di acara pernikahan:\n\n*Nama:* {$namaTamu}\n*Konfirmasi:* {$statusText}\n*Jumlah Tamu:* {$jumlah} Orang\n\nTerima kasih atas undangannya.";
         } else {
-            $pesan = "Halo {$pria} & {$wanita},\n\nSaya ingin mengonfirmasi bahwa:\n- Nama: {$namaTamu}\n- Konfirmasi: {$statusText}\n\nTerima kasih banyak atas undangannya, semoga acara pernikahan berjalan lancar dan penuh berkah.";
+            $pesan = "Halo {$pria} dan {$wanita},\n\nSaya ingin mengonfirmasi bahwa:\n\n*Nama:* {$namaTamu}\n*Konfirmasi:* {$statusText}\n\nTerima kasih banyak atas undangannya, semoga acara pernikahan berjalan lancar dan penuh berkah.";
         }
 
-        $waUrl = 'https://wa.me/' . $waDigits . '?text=' . rawurlencode($pesan);
+        $waUrl = 'https://api.whatsapp.com/send?phone=' . $waDigits . '&text=' . rawurlencode($pesan);
 
         return response()->json([
             'success' => true,

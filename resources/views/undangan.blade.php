@@ -11,9 +11,20 @@
         audio: null,
         _autoScrolling: false,
         init() {
+            // Matikan restorasi scroll browser agar selalu mulai dari atas saat web dibuka/direload
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
+
             this.audio = new Audio('{{ asset(config('wedding.media.audio')) }}');
             this.audio.loop = true;
             this.audio.volume = 0.5;
+
+            // Kunci scroll halaman selama cover belum dibuka
+            if (!this.isOpen) {
+                document.body.classList.add('overflow-hidden');
+            }
 
             // Hentikan auto-scroll jika user mengetik di input / textarea
             window.addEventListener('focusin', (e) => {
@@ -37,17 +48,17 @@
         },
         bukaUndangan() {
             this.isOpen = true;
+            document.body.classList.remove('overflow-hidden');
+            window.scrollTo({ top: 0, behavior: 'instant' });
             this.playMusic();
-            setTimeout(() => {
+
+            this.$nextTick(() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
                 const pembuka = document.getElementById('pembuka');
                 if (pembuka) {
-                    pembuka.scrollIntoView({ behavior: 'smooth' });
+                    pembuka.classList.add('active');
                 }
-                // Mulai auto-scroll otomatis setelah cover dibuka dan transisi pembuka selesai
-                setTimeout(() => {
-                    this.startAutoScroll();
-                }, 1000);
-            }, 300);
+            });
         },
         toggleMusic() {
             if (this.isPlaying) {
@@ -135,7 +146,7 @@
         <div 
             x-show="isOpen" 
             x-transition 
-            class="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3"
+            class="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-3"
         >
             <!-- TOMBOL AUTO SCROLL -->
             <button 
