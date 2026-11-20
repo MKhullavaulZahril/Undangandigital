@@ -58,6 +58,7 @@
                 if (pembuka) {
                     pembuka.classList.add('active');
                 }
+                this.startAutoScroll();
             });
         },
         toggleMusic() {
@@ -108,37 +109,37 @@
     }">
 
         <!-- SECTION 1: COVER -->
-        @include('partials.cover')
+        @include('wedding.cover')
 
         <!-- KONTEN UTAMA -->
         <div x-show="isOpen" x-transition.opacity.duration.500ms>
 
             <!-- SECTION 2: PEMBUKA -->
-            @include('partials.pembuka')
+            @include('wedding.pembuka')
 
             <!-- SECTION 3: MEMPELAI -->
-            @include('partials.mempelai')
+            @include('wedding.mempelai')
 
             <!-- SECTION 4: COUNTDOWN -->
-            @include('partials.countdown')
+            @include('wedding.countdown')
 
             <!-- SECTION 5: ACARA -->
-            @include('partials.acara')
+            @include('wedding.acara')
 
             <!-- SECTION 6: GALERI -->
-            @include('partials.galeri')
+            @include('wedding.galeri')
 
             <!-- SECTION 7: AMPLOP -->
-            @include('partials.amplop')
+            @include('wedding.amplop')
 
             <!-- SECTION 8: UCAPAN -->
-            @include('partials.ucapan')
+            @include('wedding.ucapan')
 
             <!-- SECTION 9: RSVP -->
-            @include('partials.rsvp')
+            @include('wedding.rsvp')
 
             <!-- SECTION 10: PENUTUP -->
-            @include('partials.penutup')
+            @include('wedding.penutup')
 
         </div>
 

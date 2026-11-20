@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Rsvp;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

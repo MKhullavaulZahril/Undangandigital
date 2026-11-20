@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UndanganController;
-use App\Http\Controllers\RsvpController;
-use App\Http\Controllers\UcapanController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\LinkTamuController;
+use App\Http\Controllers\Frontend\UndanganController;
+use App\Http\Controllers\Frontend\RsvpController;
+use App\Http\Controllers\Frontend\UcapanController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\LinkTamuController;
 use App\Http\Middleware\AdminBasicAuth;
 
 /*
