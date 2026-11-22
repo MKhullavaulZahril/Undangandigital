@@ -84,7 +84,15 @@
         </div>
 
         <p class="font-judul text-[#C5A059] text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold">
-            &mdash; {{ strtoupper(\Carbon\Carbon::parse(config('wedding.akad.target_iso'))->translatedFormat('l, d F Y')) }} &mdash;
+            @php
+                $coverIso = $targetCountdown ?? ($acara['akad']['target_iso'] ?? config('wedding.countdown_default', config('wedding.akad.target_iso')));
+                try {
+                    $coverTanggal = strtoupper(\Carbon\Carbon::parse($coverIso)->translatedFormat('l, d F Y'));
+                } catch (\Throwable $e) {
+                    $coverTanggal = strtoupper($acara['akad']['tanggal'] ?? config('wedding.akad.tanggal'));
+                }
+            @endphp
+            &mdash; {{ $coverTanggal }} &mdash;
         </p>
     </div>
 </section>

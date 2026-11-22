@@ -36,7 +36,15 @@
             {{ config('wedding.mempelai_wanita.panggilan') }}
         </h2>
         <p class="font-isi text-[11px] md:text-xs text-[#4A4A4A] tracking-[0.2em] uppercase font-medium mt-1">
-            {{ config('wedding.akad.weton') ?? strtoupper(\Carbon\Carbon::parse(config('wedding.akad.target_iso'))->translatedFormat('l, d F Y')) }}
+            @php
+                $pembukaIso = $targetCountdown ?? ($acara['akad']['target_iso'] ?? config('wedding.countdown_default', config('wedding.akad.target_iso')));
+                try {
+                    $pembukaTanggal = strtoupper(\Carbon\Carbon::parse($pembukaIso)->translatedFormat('l, d F Y'));
+                } catch (\Throwable $e) {
+                    $pembukaTanggal = strtoupper($acara['akad']['tanggal'] ?? config('wedding.akad.tanggal'));
+                }
+            @endphp
+            {{ $acara['akad']['weton'] ?? ($acara['weton'] ?? (config('wedding.akad.weton') ?? $pembukaTanggal)) }}
         </p>
     </div>
 

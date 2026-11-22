@@ -41,6 +41,6 @@ Route::middleware(AdminBasicAuth::class)->group(function () {
     Route::post('/admin/link', [LinkTamuController::class, 'generate'])->name('admin.link.generate');
 });
 
-// Paling bawah: nama tamu di akhir link.
-Route::get('/{slug}', [UndanganController::class, 'index'])
-    ->where('slug', '(?!.*\.(ico|txt|xml|png|jpe?g|webp|svg|gif|css|js|map|json|mp3)$)[^/]+');
+// Paling bawah: parameter nama tamu di URL (/{tamu?})
+Route::get('/{tamu?}', [UndanganController::class, 'index'])
+    ->where('tamu', '(?!.*\.(ico|txt|xml|png|jpe?g|webp|svg|gif|css|js|map|json|mp3)$)[^/]+');

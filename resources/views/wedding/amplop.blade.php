@@ -25,23 +25,42 @@
         <!-- Daftar Kartu Rekening dari Config -->
         <div class="space-y-4 mb-6">
             @foreach(config('wedding.rekening', []) as $rek)
+                @php
+                    $bankName = $rek['bank'] ?? 'Bank';
+                    $namaBank = \Illuminate\Support\Str::startsWith(trim($bankName), 'Bank', true) ? trim($bankName) : 'Bank ' . trim($bankName);
+                    $namaAtasNama = preg_replace('/^(a\.?n\.?|atas\s+nama:?)\s+/i', '', trim($rek['atas_nama'] ?? ''));
+                    $teksLengkap = $namaBank . "\nNo. Rekening: " . ($rek['nomor'] ?? '') . "\na.n. " . $namaAtasNama;
+                @endphp
                 <div 
                     x-data="{ 
-                        copied: false, 
-                        nomor: '{{ $rek['nomor'] }}',
-                        copy() { 
+                        copiedSemua: false,
+                        copiedNomor: false,
+                        teksLengkap: @js($teksLengkap),
+                        nomor: @js($rek['nomor'] ?? ''),
+                        copySemua() {
+                            this.salin(this.teksLengkap, () => {
+                                this.copiedSemua = true;
+                                setTimeout(() => this.copiedSemua = false, 2500);
+                            });
+                        },
+                        copyNomor() {
+                            this.salin(this.nomor, () => {
+                                this.copiedNomor = true;
+                                setTimeout(() => this.copiedNomor = false, 2500);
+                            });
+                        },
+                        salin(teks, callback) {
                             if (navigator.clipboard && window.isSecureContext) {
-                                navigator.clipboard.writeText(this.nomor).then(() => {
-                                    this.copied = true;
-                                    setTimeout(() => this.copied = false, 2500);
-                                }).catch(() => this.fallbackCopy());
+                                navigator.clipboard.writeText(teks).then(() => {
+                                    if (callback) callback();
+                                }).catch(() => this.fallbackCopy(teks, callback));
                             } else {
-                                this.fallbackCopy();
+                                this.fallbackCopy(teks, callback);
                             }
                         },
-                        fallbackCopy() {
+                        fallbackCopy(teks, callback) {
                             const textArea = document.createElement('textarea');
-                            textArea.value = this.nomor;
+                            textArea.value = teks;
                             textArea.style.position = 'fixed';
                             textArea.style.left = '-999999px';
                             document.body.appendChild(textArea);
@@ -49,8 +68,7 @@
                             textArea.select();
                             try {
                                 document.execCommand('copy');
-                                this.copied = true;
-                                setTimeout(() => this.copied = false, 2500);
+                                if (callback) callback();
                             } catch (err) {
                                 console.error('Gagal menyalin:', err);
                             }
@@ -70,36 +88,48 @@
                     </div>
 
                     <!-- Label & Nomor Rekening -->
-                    <p class="font-isi text-[10px] text-stone-400 uppercase tracking-wider mb-0.5">
-                        Nomor Rekening
-                    </p>
+                    <div class="flex items-center justify-between mb-0.5">
+                        <p class="font-isi text-[10px] text-stone-400 uppercase tracking-wider">
+                            Nomor Rekening
+                        </p>
+                        <button 
+                            type="button"
+                            @click="copyNomor()"
+                            title="Salin nomor rekening saja"
+                            class="text-[10px] font-isi text-[#C5A059] hover:underline cursor-pointer flex items-center gap-1 transition"
+                        >
+                            <span x-show="!copiedNomor">Salin No. Saja</span>
+                            <span x-show="copiedNomor" class="text-emerald-400 font-semibold" x-cloak>No. Disalin!</span>
+                        </button>
+                    </div>
+
                     <p class="font-isi text-2xl font-bold text-white tracking-widest select-all mb-1">
                         {{ $rek['nomor'] }}
                     </p>
                     <p class="font-isi text-xs text-[#C5A059]/90 mb-4 font-medium">
-                        a.n. {{ $rek['atas_nama'] }}
+                        a.n. {{ $namaAtasNama }}
                     </p>
 
-                    <!-- Tombol Salin Nomor Rekening -->
+                    <!-- Tombol Utama Salin Rekening (Bank, No. Rek, Nama) -->
                     <button 
                         type="button"
-                        @click="copy()"
+                        @click="copySemua()"
                         class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#C5A059] via-[#d6b570] to-[#C5A059] hover:brightness-110 active:scale-95 text-[#1A1A1A] font-isi font-bold text-xs uppercase tracking-wider shadow flex items-center justify-center gap-2 cursor-pointer transition-all"
                     >
-                        <template x-if="!copied">
+                        <template x-if="!copiedSemua">
                             <span class="flex items-center gap-1.5">
                                 <svg class="w-4 h-4 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                                 </svg>
-                                <span>Salin Nomor Rekening</span>
+                                <span>Salin Rekening</span>
                             </span>
                         </template>
-                        <template x-if="copied">
+                        <template x-if="copiedSemua">
                             <span class="flex items-center gap-1.5 text-stone-900 font-bold" x-cloak>
                                 <svg class="w-4 h-4 text-emerald-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                                 </svg>
-                                <span>Tersalin ke Clipboard!</span>
+                                <span>Rekening Berhasil Disalin!</span>
                             </span>
                         </template>
                     </button>

@@ -6,16 +6,14 @@
  * ============================================================================
  * 
  * File ini adalah SATU-SATUNYA file yang perlu Anda ubah jika ingin mengganti:
+ * - Daftar slug tamu pihak pria & pemisahan acara (acara_default vs acara_pria)
+ * - Rangkaian Acara (Akad & Resepsi vs Ngunduh Mantu)
+ * - Lokasi Acara & Google Maps (lokasi_default vs lokasi_pria)
  * - Nama mempelai pria & wanita
  * - Foto-foto mempelai & galeri
- * - Tanggal & jam acara (Akad & Resepsi)
- * - Peta lokasi Google Maps (link & iframe embed)
  * - Nomor rekening / amplop digital & alamat kado fisik
- * - Kontak WhatsApp penerima RSVP
+ * - Kontak WhatsApp penerima RSVP & pembuat undangan
  * - Doa / ayat pembuka & pesan penutup
- * 
- * Anda TIDAK PERLU menyentuh kode HTML / Blade di folder resources/views/wedding!
- * Cukup ubah nilai di dalam file ini saja.
  */
 
 return [
@@ -36,24 +34,131 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | 2. Data Mempelai Pria
+    | 2. Daftar Tamu Pihak Mempelai Pria (Slug Huruf Kecil)
+    |--------------------------------------------------------------------------
+    | Masukkan slug nama tamu khusus pihak mempelai pria di sini.
+    | Ketika tamu membuka link dengan slug yang terdaftar di sini (misal: /budi-santoso),
+    | web secara otomatis hanya merender 1 acara ("Ngunduh Mantu") dan lokasi pria.
+    */
+    'tamu_pria' => [
+        'dewi-magetan',
+        'om-iwan',
+        'undangan',
+    ],
+
+
+    /*
+    |==========================================================================
+    | [MULAI] KONFIGURASI MEMPELAI WANITA (DEFAULT)
+    |==========================================================================
+    | Bagian ini digunakan untuk tamu pihak wanita atau pengunjung umum tanpa parameter.
+    | Merender 2 kartu acara: Akad Nikah & Resepsi Pernikahan.
+    */
+
+    // Target tanggal & jam untuk Countdown Timer & Google Calendar pihak wanita (Format ISO: YYYY-MM-DDTHH:mm:ss+07:00)
+    'countdown_default' => '2026-12-22T08:00:00+07:00',
+
+    'acara_default' => [
+        [
+            'badge'         => 'AKAD NIKAH',
+            'judul'         => 'Akad Nikah',
+            'tanggal_angka' => '22',
+            'hari'          => 'TUESDAY',
+            'bulan_tahun'   => 'DEC 2026',
+            'waktu'         => '08:00 WIB - 10:00 WIB',
+            'tempat'        => 'Rumah Bapak Rekso Wibowo',
+            'alamat'        => 'Dsn. Nglaban RT 033 RW 009 Ds. Babadan Kec. Patianrowo',
+            'target_iso'    => '2026-12-22T08:00:00+07:00',
+        ],
+        [
+            'badge'         => 'WALIMATUL \'URSY',
+            'judul'         => 'Resepsi Pernikahan',
+            'tanggal_angka' => '22',
+            'hari'          => 'TUESDAY',
+            'bulan_tahun'   => 'DEC 2026',
+            'waktu'         => '10:00 - 14:00 WIB',
+            'tempat'        => 'Rumah Bapak Rekso Wibowo',
+            'alamat'        => 'Dsn. Nglaban RT 033 RW 009 Ds. Babadan Kec. Patianrowo',
+            'target_iso'    => '2026-12-22T10:00:00+07:00',
+        ],
+    ],
+
+    'lokasi_default' => [
+        'tempat'         => 'Rumah Bapak Rekso Wibowo',
+        'alamat'         => 'Dsn. Nglaban RT 033 RW 009 Ds. Babadan Kec. Patianrowo',
+        // Link saat tombol "Buka di Google Maps" diklik
+        'maps_url'       => 'https://maps.google.com/?q=-7.564881,112.079360',
+        // Link iframe embed untuk memunculkan kotak peta di dalam web
+        'maps_embed_url' => 'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3956.4!2d112.07936!3d-7.564881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zN8KwMzMnNTMuNiJTIDExMsKwMDQnNDUuNyJF!5e0!3m2!1sid!2sid!4v1000000000000!5m2!1sid!2sid',
+    ],
+
+    /*
+    |==========================================================================
+    | [AKHIR] KONFIGURASI MEMPELAI WANITA (DEFAULT)
+    |==========================================================================
+    */
+
+
+    /*
+    |==========================================================================
+    | [MULAI] KONFIGURASI MEMPELAI PRIA ("NGUNDUH MANTU")
+    |==========================================================================
+    | Bagian ini khusus untuk tamu pihak mempelai pria (hanya 1 acara saja).
+    */
+
+    // Target tanggal & jam untuk Countdown Timer & Google Calendar pihak pria (Format ISO: YYYY-MM-DDTHH:mm:ss+07:00)
+    'countdown_pria' => '2026-12-23T10:00:00+07:00',
+
+    'acara_pria' => [
+        [
+            'badge'         => 'NGUNDUH MANTU',
+            'judul'         => 'Ngunduh Mantu',
+            'tanggal_angka' => '23',
+            'hari'          => 'WEDNESDAY',
+            'bulan_tahun'   => 'DEC 2026',
+            'waktu'         => '10:00 WIB - Selesai',
+            'tempat'        => 'Kediaman Mempelai Pria (Bpk. Subagyo)',
+            'alamat'        => 'Dsn. Nglawak Ds. Nglawak, Kec. Kertosono, Kab. Nganjuk',
+            'target_iso'    => '2026-12-23T10:00:00+07:00',
+        ],
+    ],
+
+    'lokasi_pria' => [
+        'tempat'         => 'Kediaman Mempelai Pria (Bpk. Subagyo)',
+        'alamat'         => 'Dsn. Nglawak Ds. Nglawak, Kec. Kertosono, Kab. Nganjuk',
+        // Link saat tombol "Buka di Google Maps" diklik
+        'maps_url'       => 'https://maps.app.goo.gl/tTQm67NegUzE8hhbA',
+        // Link iframe embed untuk memunculkan kotak peta di dalam web
+        'maps_embed_url' => 'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3954.758300171168!2d112.08900177500311!3d-7.601261792413741!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zN8KwMzYnMDQuNSJTIDExMsKwMDUnMjkuNyJF!5e0!3m2!1sen!2sid!4v1795320749157!5m2!1sen!2sid',
+    ],
+
+    /*
+    |==========================================================================
+    | [AKHIR] KONFIGURASI MEMPELAI PRIA ("NGUNDUH MANTU")
+    |==========================================================================
+    */
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Data Mempelai Pria
     |--------------------------------------------------------------------------
     */
     'mempelai_pria' => [
         'panggilan'    => 'Ainun',
-        'nama_lengkap' => 'MUHAMMAD AINUN SAPUTRO',
+        'nama_lengkap' => 'MUHAMAD AINUN SAPUTRO',
         'ayah'         => 'Bapak Subagyo',
         'ibu'          => 'Ibu Siti Chotijah',
         'putra_ke'     => 'Putra pertama bapak Subagyo',
         'domisili'     => 'Nganjuk, Jawa Timur',
-        'foto'         => 'images/mempelai-pria.jpg', // Lokasi di folder public/images/
+        'foto'         => 'images/mempelai-pria.jpg',
         'instagram'    => 'https://instagram.com/',
     ],
 
 
     /*
     |--------------------------------------------------------------------------
-    | 3. Data Mempelai Wanita
+    | Data Mempelai Wanita
     |--------------------------------------------------------------------------
     */
     'mempelai_wanita' => [
@@ -61,99 +166,71 @@ return [
         'nama_lengkap' => 'DINDA RAMADHANTY ARYANI',
         'ayah'         => 'Bapak Rekso Wibowo',
         'ibu'          => 'Ibu Mutik Aniati',
-        'putri_ke'     => 'Putri Pertama dari bapak fulan',
+        'putri_ke'     => 'Putri Pertama dari bapak Rekso Wibowo',
         'domisili'     => 'Nganjuk, Jawa Timur',
-        'foto'         => 'images/mempelai-wanita.jpg', // Lokasi di folder public/images/
+        'foto'         => 'images/mempelai-wanita.jpg',
         'instagram'    => 'https://instagram.com/',
     ],
 
 
     /*
     |--------------------------------------------------------------------------
-    | 4. Kontak WhatsApp Pengantin (Penerima Konfirmasi RSVP)
+    | Kontak WhatsApp Pengantin & Pembuat
     |--------------------------------------------------------------------------
-    | Masukkan nomor WhatsApp pengantin/panitia dengan format awalan 62.
-    | Contoh: 6281234567890 (tanpa tanda +, spasi, atau strip).
     */
     'wa_pengantin' => env('WA_PENGANTIN', '6281234567890'),
+    'wa_pembuat'   => env('WA_PEMBUAT', '6285183142297'),
 
 
     /*
     |--------------------------------------------------------------------------
-    | 5. Agenda Acara: Akad Nikah
+    | Konfigurasi Kompatibilitas Legacy (Akad, Resepsi, Lokasi)
     |--------------------------------------------------------------------------
     */
     'akad' => [
         'judul'       => 'Akad Nikah',
         'tanggal'     => '22 Desember 2026',
-        
-        // Target Countdown timer & Google Calendar: format YYYY-MM-DDTHH:mm:ss+07:00
         'target_iso'  => '2026-12-22T08:00:00+07:00',
-        
-        // Teks hari/weton yang tampil di banner acara
-        'weton'       => 'Selasa Kliwon, 22 Desember 2026',
-        
+        'weton'       => 'Selasa, 22 Desember 2026',
         'jam_mulai'   => '08:00',
         'jam_selesai' => '10:00 WIB',
+        'jam'         => '08:00 WIB - 10:00 WIB',
         'tempat'      => 'Rumah Bapak Rekso Wibowo',
-        'alamat'      => 'Dsn . Nglaban RT 033 RW 009 Ds. Babadan Kec. Patianrowo',
+        'alamat'      => 'Dsn. Nglaban RT 033 RW 009 Ds. Babadan Kec. Patianrowo',
     ],
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | 6. Agenda Acara: Resepsi Pernikahan
-    |--------------------------------------------------------------------------
-    */
     'resepsi' => [
         'judul'   => 'Resepsi Pernikahan',
         'tanggal' => '22 Desember 2026',
         'jam'     => '10:00 - 14:00 WIB',
         'tempat'  => 'Rumah Bapak Rekso Wibowo',
-        'alamat'  => 'Dsn . Nglaban RT 033 RW 009 Ds. Babadan Kec. Patianrowo',
+        'alamat'  => 'Dsn. Nglaban RT 033 RW 009 Ds. Babadan Kec. Patianrowo',
     ],
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | 7. Lokasi Google Maps
-    |--------------------------------------------------------------------------
-    */
     'lokasi' => [
-        // Link yang akan dibuka saat tamu menekan tombol "Buka Google Maps"
         'gmaps_url' => 'https://maps.google.com/?q=-7.564881,112.079360',
-        
-        // URL iframe embed untuk menampilkan peta langsung di dalam halaman
-        // Cara dapat: Buka Google Maps -> Bagikan -> Sematkan peta -> Salin link di src="..."
         'embed_url' => 'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3956.4!2d112.07936!3d-7.564881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zN8KwMzMnNTMuNiJTIDExMsKwMDQnNDUuNyJF!5e0!3m2!1sid!2sid!4v1000000000000!5m2!1sid!2sid',
     ],
 
 
     /*
     |--------------------------------------------------------------------------
-    | 8. Rekening / Amplop Digital
+    | Rekening / Amplop Digital & Alamat Kado Fisik
     |--------------------------------------------------------------------------
-    | Anda dapat menambahkan lebih banyak rekening sesuai kebutuhan.
     */
     'rekening' => [
         [
             'bank'      => 'BRI',
             'nomor'     => '375001034021539',
-            'atas_nama' => 'AN. MUHAMAD AINUN SAPUTRO',
+            'atas_nama' => 'MUHAMAD AINUN SAPUTRO',
         ],
         [
             'bank'      => 'BCA',
             'nomor'     => '0184566636',
-            'atas_nama' => 'AN. DINDA RAMADHANTY ARYANI',
+            'atas_nama' => 'DINDA RAMADHANTY ARYANI',
         ],
     ],
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | 9. Alamat Pengiriman Kado Fisik
-    |--------------------------------------------------------------------------
-    */
     'kado_fisik' => [
         'alamat' => 'Kediaman Bpk. Subagyo (Ainun), Dsn. Nglawak Ds. Nglawak, Kec. Kertosono, Kab. Nganjuk 64484',
     ],
@@ -161,7 +238,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | 10. Ayat / Doa & Pesan Penutup
+    | Ayat / Doa & Pesan Penutup
     |--------------------------------------------------------------------------
     */
     'doa' => [
@@ -175,13 +252,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | 11. Media (Gambar, Audio Musik, Galeri Foto)
+    | Media (Gambar, Audio Musik, Galeri Foto)
     |--------------------------------------------------------------------------
-    | Semua file berada di dalam folder public/
     */
     'media' => [
-        'cover'  => 'images/cover.jpg',     // Foto sampul pembuka
-        'audio'  => 'audio/musik.mp3',      // Backsound musik undangan
+        'cover'  => 'images/cover.jpg',
+        'audio'  => 'audio/musik.mp3',
         'galeri' => [
             'images/galeri/foto-1.jpg',
             'images/galeri/foto-2.jpg',

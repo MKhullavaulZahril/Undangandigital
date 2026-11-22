@@ -13,7 +13,7 @@
     {{-- Preview link WhatsApp / sosial media --}}
     <meta property="og:type" content="website">
     <meta property="og:title" content="The Wedding of {{ config('wedding.mempelai_pria.panggilan', 'Ainun') }} & {{ config('wedding.mempelai_wanita.panggilan', 'Dinda') }}">
-    <meta property="og:description" content="{{ \Carbon\Carbon::parse(config('wedding.akad.target_iso'))->translatedFormat('l, d F Y') }}">
+    <meta property="og:description" content="{{ \Carbon\Carbon::parse($targetCountdown ?? config('wedding.countdown_default', config('wedding.akad.target_iso')))->translatedFormat('l, d F Y') }}">
     <meta property="og:image" content="{{ asset(config('wedding.media.cover', 'images/cover.jpg')) }}">
     <meta property="og:url" content="{{ url('/') }}">
     <meta property="og:locale" content="id_ID">

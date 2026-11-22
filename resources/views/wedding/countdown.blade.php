@@ -21,7 +21,7 @@
         <!-- Alpine.js Countdown Timer (Dengan ID untuk Kompatibilitas JS) -->
         <div 
             x-data="{
-                target: new Date('{{ config('wedding.akad.target_iso') }}').getTime(),
+                target: new Date('{{ $targetCountdown ?? ($acara['akad']['target_iso'] ?? config('wedding.countdown_default', config('wedding.akad.target_iso'))) }}').getTime(),
                 days: 0, hours: 0, minutes: 0, seconds: 0,
                 init() {
                     const update = () => {
